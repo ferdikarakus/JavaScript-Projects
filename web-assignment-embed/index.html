@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Example</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .main-content {
+            width: 90%;
+            max-width: 1000px;
+            margin: 30px auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+            flex: 1;
+        }
+
+        .floating-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            width: 100%;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .floating-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+        }
+
+        .card-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .card-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(to right, #ffffff, #f0f0f0);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .card-header h3 {
+            font-size: 1.5rem;
+            color: #f0f0f0;
+            font-weight: 400;
+        }
+
+        .pulse {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            color: #fdbb2d;
+            animation: pulse 2s infinite;
+            display: block;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.8; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 25px;
+        }
+
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            height: 0;
+        }
+
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 12px;
+        }
+
+        .glow-effect {
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            border-radius: 20px;
+            z-index: -1;
+            background: linear-gradient(45deg, #ff00cc, #3333ff, #00ccff);
+            background-size: 200% 200%;
+            animation: glowAnimation 3s ease infinite;
+            filter: blur(15px);
+            opacity: 0.7;
+        }
+
+        @keyframes glowAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .action-button {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+            backdrop-filter: blur(5px);
+        }
+
+        .action-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
+        }
+
+        .action-button i {
+            font-size: 20px;
+        }
+
+        .info-card {
+            background: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 25px;
+            width: 100%;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .info-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .info-header h3 {
+            font-size: 1.5rem;
+        }
+
+        .rotating {
+            animation: rotate 5s linear infinite;
+            color: #fdbb2d;
+            font-size: 24px;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .info-card p {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+            line-height: 1.5;
+        }
+
+        .benefit-boxes {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .benefit-box {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            flex: 1;
+            min-width: 120px;
+            transition: transform 0.3s;
+        }
+
+        .benefit-box:hover {
+            transform: translateY(-5px);
+        }
+
+        .bounce {
+            color: #fdbb2d;
+            font-size: 30px;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-15px); }
+            60% { transform: translateY(-7px); }
+        }
+
+        .dock-container {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 100;
+        }
+
+        .dock {
+            display: flex;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 10px;
+            gap: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .dock-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .dock-item i {
+            font-size: 30px;
+            color: white;
+            transition: all 0.3s;
+        }
+
+        .dock-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-10px) scale(1.1);
+        }
+
+        .dock-item:hover i {
+            color: #fdbb2d;
+        }
+
+        .dock-item.active {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .dock-item.active i {
+            color: #fdbb2d;
+        }
+
+        .tooltip {
+            position: absolute;
+            top: -40px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 12px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+            white-space: nowrap;
+        }
+
+        .dock-item:hover .tooltip {
+            opacity: 1;
+        }
+
+        .floating-tip {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            animation: slideIn 0.5s forwards, float 3s ease-in-out infinite;
+            z-index: 100;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .floating-tip i {
+            color: #fdbb2d;
+            font-size: 24px;
+        }
+
+        .floating-tip p {
+            margin: 0;
+            font-size: 14px;
+        }
+
+        #closeTip {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .footer {
+            width: 100%;
+            padding: 20px;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            margin-top: auto;
+        }
+
+        .social {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .social a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .social a:hover {
+            color: #fdbb2d;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                width: 95%;
+                margin: 20px auto;
+            }
+
+            .card-header h2 {
+                font-size: 1.8rem;
+            }
+
+            .card-header h3 {
+                font-size: 1.2rem;
+            }
+
+            .dock {
+                gap: 10px;
+                padding: 8px;
+            }
+
+            .dock-item {
+                width: 50px;
+                height: 50px;
+            }
+
+            .dock-item i {
+                font-size: 24px;
+            }
+
+            .benefit-boxes {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main-content">
+        <div class="floating-card">
+            <div class="card-header">
+                <i class="material-icons pulse">cloud_queue</i>
+                <h2>The REAL Cost Of AWS</h2>
+                <h3>(And How To Avoid It)</h3>
+            </div>
+
+            <div class="video-container">
+                <div class="video-wrapper">
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/kK-iR6g-V1g"
+                        allowfullscreen></iframe>
+                </div>
+                <div class="glow-effect"></div>
+            </div>
+
+            <div class="action-buttons">
+                <button class="action-button save-button">
+                    <i class="material-icons">bookmark</i>
+                    <span>Save</span>
+                </button>
+                <button class="action-button share-button">
+                    <i class="material-icons">share</i>
+                    <span>Share</span>
+                </button>
+                <button class="action-button like-button">
+                    <i class="material-icons">favorite_border</i>
+                    <span>Like</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="info-card">
+            <div class="info-header">
+                <i class="material-icons rotating">info</i>
+                <h3>Why This Matters</h3>
+            </div>
+            <p>AWS costs can get expensive if you don't know what you're doing!</p>
+            <div class="benefit-boxes">
+                <div class="benefit-box">
+                    <i class="material-icons bounce">trending_down</i>
+                    <p>Lower your bill</p>
+                </div>
+                <div class="benefit-box">
+                    <i class="material-icons bounce">build</i>
+                    <p>Use better tools</p>
+                </div>
+                <div class="benefit-box">
+                    <i class="material-icons bounce">auto_awesome</i>
+                    <p>Best practices</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="dock-container">
+        <div class="dock">
+            <div class="dock-item active">
+                <i class="material-icons">home</i>
+                <span class="tooltip">Home</span>
+            </div>
+            <div class="dock-item">
+                <i class="material-icons">video_library</i>
+                <span class="tooltip">Videos</span>
+            </div>
+            <div class="dock-item">
+                <i class="material-icons">cloud</i>
+                <span class="tooltip">AWS</span>
+            </div>
+            <div class="dock-item">
+                <i class="material-icons">savings</i>
+                <span class="tooltip">Cost</span>
+            </div>
+            <div class="dock-item">
+                <i class="material-icons">settings</i>
+                <span class="tooltip">Settings</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="floating-tip" id="floating-tip">
+        <i class="material-icons">lightbulb</i>
+        <p>Tip: Use AWS Cost Explorer!</p>
+        <button id="closeTip">
+            <i class="material-icons">close</i>
+        </button>
+    </div>
+
+    <div class="footer">
+        <p>© 2025 Cloud Academy</p>
+        <div class="social">
+            <a href="#"><i class="material-icons">flutter_dash</i></a>
+            <a href="#"><i class="material-icons">link</i></a>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const dockItems = document.querySelectorAll('.dock-item');
+            dockItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    dockItems.forEach(i => i.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+
+            const closeTip = document.getElementById('closeTip');
+            const floatingTip = document.getElementById('floating-tip');
+            
+            closeTip.addEventListener('click', function() {
+                floatingTip.style.animation = 'slideIn 0.5s reverse forwards';
+                setTimeout(() => {
+                    floatingTip.style.display = 'none';
+                }, 500);
+            });
+
+            const actionButtons = document.querySelectorAll('.action-button');
+            actionButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 100);
+
+                    if (this.classList.contains('like-button')) {
+                        const icon = this.querySelector('i');
+                        if (icon.textContent === 'favorite_border') {
+                            icon.textContent = 'favorite';
+                            icon.style.color = '#ff4081';
+                        } else {
+                            icon.textContent = 'favorite_border';
+                            icon.style.color = '';
+                        }
+                    }
+                });
+            });
+
+            const tips = [
+                "Use AWS Cost Explorer to track spending",
+                "Set up budget alerts to avoid surprises",
+                "Consider reserved instances for steady workloads",
+                "Use auto-scaling to optimize resource usage",
+                "Check for unused resources regularly"
+            ];
+
+            setInterval(() => {
+                if (floatingTip.style.display !== 'none') {
+                    const randomTip = tips[Math.floor(Math.random() * tips.length)];
+                    floatingTip.querySelector('p').textContent = randomTip;
+                    
+                    floatingTip.style.animation = 'none';
+                    setTimeout(() => {
+                        floatingTip.style.animation = 'float 3s ease-in-out infinite';
+                    }, 10);
+                }
+            }, 30000);
+        });
+    </script>
+</body>
+
+</html>
